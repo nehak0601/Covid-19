@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Covid-19 Analytics</title>
+
+    <link rel="stylesheet" type="text/css" href="static/css/multichart.css">
+  </head>
+
+  <body>
+    <script type="text/javascript">
+      var chart_ = JSON.parse({{ chart_data|tojson }});
+    </script>
+    {% extends "template.html" %}
+    {% block content %}
+    
+  <div class="container-fluid mt-3">
+    <div class="row">
+    {% for kpi, value in data_kpis.items() %}
+      <div class="col-md-3">
+        <div class="card" style="width: 18rem;">
+            <li class="list-group-item bg-light"><b>{{kpi}}</b></li>
+            <li class="list-group-item items">
+              {{value}}
+            </li>
+          </ul>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
+<!--multiline chart-->
+  <div class="container-fluid mt-4">
+    <h4 class="bg-light">Outbreak Trend</h4>
+    <div id="chart">
+    </div>
+    <br>
+
+  <div class="row mb-5">
+    <div class="col-md-12">
+      <div class="card scroll">
+        <table class="table table-hover">
+        <thead>
+          <tr class="bg-light">
+            <th>Countries</th>
+            <th>Confirmed</th>
+            <th>Deaths</th>
+            <th>Province</th>
+            <th>Recovered</th>         
+          </tr>
+        </thead>
+        <tbody>
+          {% for row in data.iterrows() %}
+            <tr>
+              <td> {{row[1]['country']}} </td>
+              <td> {{row[1]['confirmed']}} </td>
+              <td> {{row[1]['deaths']}} </td>
+              <td> {{row[1]['province']}} </td>
+              <td> {{row[1]['recovered']}} </td>
+            
+            </tr>
+          {% endfor %}
+        </tbody>
+        </table>
+
+      </div>
+    </div>
+  </div>  
+  </div>  
+
+
+    
+    {% endblock %}
+
+
+  </body>
+
+</html>

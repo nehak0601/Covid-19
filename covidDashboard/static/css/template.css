@@ -1,0 +1,13 @@
+body {
+  font-family: 'Montserrat', sans-serif;
+ /* color: White;*/
+}
+.navbar{
+	color: white;
+}
+.logo {
+  background-color: #0D122B;
+  padding: 10px;
+  color: white;
+}
+
