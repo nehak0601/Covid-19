@@ -1,0 +1,42 @@
+body { font: 12px Arial;}
+
+path {
+    stroke: steelblue;
+    stroke-width: 2;
+    fill: none;
+}
+
+.axis path,
+.axis line {
+    fill: none;
+    stroke: grey;
+    stroke-width: 1;
+    shape-rendering: crispEdges;
+}
+
+.legend {
+    font-size: 16px;
+    font-weight: bold;
+    text-anchor: middle;
+}
+
+.scroll {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.col-md-3:nth-child(1){
+    color: steelblue;
+}
+.col-md-3:nth-child(2){
+    color: orange;
+}
+.col-md-3:nth-child(3){
+    color: green;
+}
+.col-md-3:nth-child(4){
+    color: red;
+}
+.items{
+    color:black;
+}
