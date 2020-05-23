@@ -23,32 +23,29 @@
 
   <body>
   <div class="container-fluid">
-    <nav class="navbar navbar-dark bg-dark">
-       <h4><img src="static/images/logo1.jpg" height="60" width="70">
-       Covid-19 Analytics</h4>
+    <nav class="navbar navbar-dark bg-dark p-0">
+     
+      <div class="d-flex flex-row">
+        <div class="p-2 mt-2"> <a href="{{ url_for('home') }}"><img src="static/images/icon.png" width="40" height="40" ></a></div>
+        <div class="p-2"><h4><img src="static/images/logo1.jpg" height="60" width="70">
+       Covid-19 Analytics
+       </h4></div>
+      </div> 
        <div class="d-flex flex-row-reverse">
-
-      
-
-         <div class="p-2"><a href="/details">About Covid-19</a></div>
-         <div class="p-2"><a href="/">Home</a></div>
-         
-      <!--Dropdown-->
+       <div class="p-2" id="about"><a href="/details">About Covid-19</a></div>
+       
+      <!-- select dropdown -->
       <div class="dropdown">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-toggle-second="tooltip" data-placement="right" title="Select Country">
+        <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+         Select Country
         </button>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-          <a class="dropdown-item" href="#">India</a>
-          <a class="dropdown-item" href="#">China</a>
-        </div>
+         <div class="dropdown-menu scroll" aria-labelledby="dropdownMenuButton">
+            {% for country in list1 %}
+              <a class="dropdown-item" href="?country={{country[0]}}">{{ country[0] }}</a>
+            {% endfor %}
+          </div>
       </div>
-       </div>
-      
     </nav>
-        
-    <!-- <ul class="menu">
-      <li><a href="{{ url_for('home') }}">Home</a></li>
-    </ul> -->
       
     {% block content %}
     {% endblock %}

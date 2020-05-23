@@ -3,22 +3,22 @@
   <head>
     <meta charset="utf-8">
     <title>Covid-19 Analytics</title>
-
     <link rel="stylesheet" type="text/css" href="static/css/multichart.css">
   </head>
 
   <body>
     <script type="text/javascript">
       var chart_ = JSON.parse({{ chart_data|tojson }});
+      var mode = {{ mode|tojson }}
     </script>
     {% extends "template.html" %}
     {% block content %}
     
-  <div class="container-fluid mt-3">
+  <div class="container-fluid mt-1">
     <div class="row">
     {% for kpi, value in data_kpis.items() %}
       <div class="col-md-3">
-        <div class="card" style="width: 18rem;">
+        <div class="card">
             <li class="list-group-item bg-light"><b>{{kpi}}</b></li>
             <li class="list-group-item items">
               {{value}}
@@ -31,33 +31,47 @@
   </div>
 
 <!--multiline chart-->
-  <div class="container-fluid mt-4">
-    <h4 class="bg-light">Outbreak Trend</h4>
+  <div class="container-fluid mt-4 ">
+    <h4 class="bg-light">Outbreak Distribution</h4>
+  
+    <svg width="100%" height="40" viewBox = "0 0 1280 40">
+      {% set total, deaths, recovered = data_kpis['Confirmed Cases'], data_kpis['Confirmed Deaths'], data_kpis['Case Recovered']  %}
+      {% set width_offset = 1280 / total %}
+      
+      <rect height="30" width="{{ (total - (recovered + deaths)) * width_offset}}" x="0" y=10 fill="orange" data-toggle="tooltip" data-placement="top" title="Remaining Cases: {{(total - (recovered + deaths))}}"></rect>
+      <rect height="30" width="{{ width_offset * recovered }}" x="{{ (total - (recovered+deaths)) * width_offset}}" y=10 fill="green" data-toggle="tooltip" data-placement="top" title="Recovered Cases: {{recovered}}"></rect>
+      <rect id="recovered" height="30" width="{{ width_offset * deaths }}" x="{{ ((total - (recovered+deaths)) * width_offset) + (width_offset * recovered) }}" y=10 fill="red" data-toggle="tooltip" data-placement="top" title="Total Death: {{deaths}}">
+        
+      </rect>
+    </svg>
+    
     <div id="chart">
+    </div>
+    <div>
     </div>
     <br>
 
   <div class="row mb-5">
     <div class="col-md-12">
       <div class="card scroll">
-        <table class="table table-hover">
+        <table class="table table-hover table-striped">
         <thead>
-          <tr class="bg-light">
+          <b><tr>
             <th>Countries</th>
-            <th>Confirmed</th>
-            <th>Deaths</th>
             <th>Province</th>
-            <th>Recovered</th>         
-          </tr>
+            <th>Confirmed Cases</th>
+            <th>Case Recovered</th>
+            <th>Confirmed Deaths</th>         
+          </tr></b>
         </thead>
         <tbody>
           {% for row in data.iterrows() %}
             <tr>
               <td> {{row[1]['country']}} </td>
-              <td> {{row[1]['confirmed']}} </td>
-              <td> {{row[1]['deaths']}} </td>
               <td> {{row[1]['province']}} </td>
+              <td> {{row[1]['confirmed']}} </td>
               <td> {{row[1]['recovered']}} </td>
+              <td> {{row[1]['deaths']}} </td>
             
             </tr>
           {% endfor %}
@@ -67,11 +81,9 @@
       </div>
     </div>
   </div>  
-  </div>  
+  </div>
 
-
-    
-    {% endblock %}
+  {% endblock %}
 
 
   </body>

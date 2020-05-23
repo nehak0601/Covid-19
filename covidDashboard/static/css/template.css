@@ -10,4 +10,6 @@ body {
   padding: 10px;
   color: white;
 }
-
+#about a{
+  color: white;
+}

@@ -1,6 +1,8 @@
 $(document).ready(function(){
 		chart_['columns'] = ['country', 'confirmed', 'deaths', 'recovered'];
-		render_multiline('#chart', chart_);	
+    if(mode == 'country') {
+		  render_multiline('#chart', chart_);	
+  }
 });
 
 function render_multiline(selector, data){
@@ -8,24 +10,20 @@ function render_multiline(selector, data){
 	// Set the dimensions of the canvas / graph
 	//console.log(data)
 	var svg = d3.select(selector),
-        margin = {top: 20, right: 40, bottom: 40, left: 50},
+        margin = {top: 20, right: 40, bottom: 100, left: 50},
         width = $(selector).width() - margin.left - margin.right,
-        height = 300 - margin.top - margin.bottom;
+        height = 350 - margin.top - margin.bottom;
 
     svg = svg.append('svg')
-    			.attr('width', width + margin.left + margin.right)
+    			.attr('width', "100%")
     			.attr('height', height + margin.top + margin.bottom)
+          .attr('viewBox', "0 0 " + ($(selector).width()) + " " + (height +  margin.bottom))
     var g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
     var x = d3.scalePoint().range([0, width]),
         y = d3.scaleLinear();
         z = d3.scaleOrdinal()
-             .range(["green", "steelblue", "red"]);  ;   
-
-    // Define the div for the tooltip
-    // var div = d3.select("body").append("div") 
-    //     .attr("class", "tooltip") 
-    //     .style("opacity", 0);
+             .range(["green", "orange", "red"]);  
 
     var line = d3.line()
         .x(function(d) { return x(d.country); })
@@ -40,22 +38,20 @@ function render_multiline(selector, data){
         };
       });
       console.log([d3.min(data, function (d) { return d.confirmed; }), d3.max(data, function (d) { return d.confirmed; })])
-      // data=[data.map(d=>d.confirmed)]
-      // console.log(data)
-      console.log()
       x.domain(data.map(d=>d.country));
       y.domain([d3.min(data, function (d) { return d.confirmed; }), d3.max(data, function (d) { return d.confirmed; })]).range([height,0]);
       z.domain(znfs.map(function(c) { return c.name; }));
 
       g.append("g")
           .attr("class", "x axis")
-          .attr("transform", "translate(0," + (height + 15) + ")")
+          .attr("transform", "translate(0," + (height + 10) + ")")
+          .style("font", "14px times")
 			    .call(d3.axisBottom(x))
 			    .selectAll("text")
 			    .attr("y", 0)
-			    .attr("x",8)
+			    .attr("x",-10)
 			    .attr("dy", ".35em")
-			    .attr("transform", "rotate(-90)")
+			    .attr("transform", "rotate(-65)")
 			    .style("text-anchor", "end")
 			   ;
       g.append("g")
