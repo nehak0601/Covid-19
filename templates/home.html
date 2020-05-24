@@ -3,17 +3,21 @@
   <head>
     <meta charset="utf-8">
     <title>Covid-19 Analytics</title>
-    <link rel="stylesheet" type="text/css" href="static/css/multichart.css">
-  </head>
+     
+     <link rel="stylesheet" type="text/css" href="static/css/multichart.css">
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+     <script type="text/javascript" src="static/js/tooltip.js"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 
+  </head>
   <body>
     <script type="text/javascript">
       var chart_ = JSON.parse({{ chart_data|tojson }});
       var mode = {{ mode|tojson }}
     </script>
+
     {% extends "template.html" %}
     {% block content %}
-    
   <div class="container-fluid mt-1">
     <div class="row">
     {% for kpi, value in data_kpis.items() %}
@@ -31,19 +35,20 @@
   </div>
 
 <!--multiline chart-->
-  <div class="container-fluid mt-4 ">
+  <div class="container-fluid mt-2 ">
     <h4 class="bg-light">Outbreak Distribution</h4>
   
     <svg width="100%" height="40" viewBox = "0 0 1280 40">
       {% set total, deaths, recovered = data_kpis['Confirmed Cases'], data_kpis['Confirmed Deaths'], data_kpis['Case Recovered']  %}
       {% set width_offset = 1280 / total %}
       
-      <rect height="30" width="{{ (total - (recovered + deaths)) * width_offset}}" x="0" y=10 fill="orange" data-toggle="tooltip" data-placement="top" title="Remaining Cases: {{(total - (recovered + deaths))}}"></rect>
-      <rect height="30" width="{{ width_offset * recovered }}" x="{{ (total - (recovered+deaths)) * width_offset}}" y=10 fill="green" data-toggle="tooltip" data-placement="top" title="Recovered Cases: {{recovered}}"></rect>
-      <rect id="recovered" height="30" width="{{ width_offset * deaths }}" x="{{ ((total - (recovered+deaths)) * width_offset) + (width_offset * recovered) }}" y=10 fill="red" data-toggle="tooltip" data-placement="top" title="Total Death: {{deaths}}">
-        
+      <rect height="30" width="{{ (total - (recovered + deaths)) * width_offset}}" x="0" y=10 fill= #FFA500 data-toggle="tooltip" title="Active Cases : {{(total - (recovered + deaths))}}"></rect>
+      <rect height="30" width="{{ width_offset * recovered }}" x="{{ (total - (recovered+deaths)) * width_offset}}" y=10 fill=#008000 data-toggle="tooltip" data-placement="top" title="Recovered Cases : {{recovered}}"></rect>
+      <rect height="30" width="{{ width_offset * deaths }}" x="{{ ((total - (recovered+deaths)) * width_offset) + (width_offset * recovered) }}" y=10 fill=#FF0000 data-toggle="tooltip" data-placement="top" title="Total Death : {{deaths}}">
       </rect>
+
     </svg>
+
     
     <div id="chart">
     </div>
@@ -53,18 +58,20 @@
 
   <div class="row mb-5">
     <div class="col-md-12">
+       <h5 class="bg-light">Case Details</h5>
       <div class="card scroll">
-        <table class="table table-hover table-striped">
+      <!-- <input class="form-control" id="myInput" type="text" placeholder="Search.."> -->
+        <table class="table table-bordered table-hover table-striped ">
         <thead>
           <b><tr>
             <th>Countries</th>
             <th>Province</th>
             <th>Confirmed Cases</th>
             <th>Case Recovered</th>
-            <th>Confirmed Deaths</th>         
+            <th>Confirmed Deaths</th>             
           </tr></b>
         </thead>
-        <tbody>
+        <tbody id="myTable">
           {% for row in data.iterrows() %}
             <tr>
               <td> {{row[1]['country']}} </td>
@@ -82,8 +89,15 @@
     </div>
   </div>  
   </div>
+<div class="d-flex justify-content-between no-gutters">
+  <div class="p-2" id="source"><span >Data Source: </span><a href="http://rapidapi.com">http://www.rapidapi.com</a></div>
+  <div class="p-2"><span >Last Refreshed On: </span>{{update.lastUpdate[1]}}</div>
+  <div class="d-flex flex-row-reverse">
+   <div class="p-2 mr-2" id="faq"><a href="/faq" target="_blank">FAQs</a></div>
+  </div>
+</div>  
 
-  {% endblock %}
+{% endblock %}
 
 
   </body>

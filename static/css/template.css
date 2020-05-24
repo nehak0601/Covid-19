@@ -13,3 +13,56 @@ body {
 #about a{
   color: white;
 }
+.dropdown-menu{
+	right:-120px;
+	left:none;
+}
+.dropdown{
+	padding-top: 5%;
+}
+.text-right{
+	font-size: 14px;
+	margin-bottom:0px;
+}
+
+div.tooltip1 { 
+    position: absolute;     
+    text-align: center; 
+    color: #fff;    
+    width: 60px;          
+    height: 18px;         
+    padding: 2px;       
+    font: 12px sans-serif;     
+    border: 0px;    
+    border-radius: 8px;     
+    pointer-events: none;     
+}
+
+
+.table-tooltip {
+	border: 1px solid #535353;
+	border-collapse: collapse;
+	background-color: #555;
+	opacity: 0.9;
+}
+#myDropDown{
+	margin-top:25px;
+	
+}
+.no-gutters{
+  background-color: #343a40;
+  color:white;
+  padding-top:10px;
+  padding-bottom:10px;
+}
+#source a{
+  color: white;
+}
+
+#faq a{
+  color: white;
+}
+.scroll_card {
+    max-height: 430px;
+    overflow-y: auto;
+}

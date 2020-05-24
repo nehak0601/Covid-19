@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Covid-19</title>
+  </head>
+<body>
+  {% extends "template.html" %}
+  {% block content %}
+    
+<!-- <nav class="navbar navbar-light bg-info mt-2 mb-4">
+  <span class="navbar-brand mb-0 h1"><h4>FAQs</h4></span>
+</nav> -->
+<div class="card mt-5 scroll_card">
+  <div class="card-header bg-info">
+    <h4>FAQ</h4>
+  </div>
+  <ul class="list-group list-group-flush">
+    {% for key, value in data.iterrows() %}
+    <li  class="list-group-item"><b>{{key + 1}}. {{value['question']}}</b><br>{{ value['answer']}}</li>
+    {% endfor %}
+  </ul>
+</div>
+
+  {% endblock %}
+
+
+</body>
+</html>

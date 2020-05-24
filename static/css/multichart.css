@@ -21,7 +21,7 @@ path {
 }
 
 .scroll {
-    max-height: 400px;
+    max-height: 300px;
     overflow-y: auto;
 }
 
@@ -29,14 +29,28 @@ path {
     color: steelblue;
 }
 .col-md-3:nth-child(2){
-    color: orange;
+    color: #FFA500;
 }
 .col-md-3:nth-child(3){
-    color: green;
+    color: #008000;
 }
 .col-md-3:nth-child(4){
-    color: red;
+    color: #FF0000;
 }
 .items{
     color:black;
 }
+
+/*.tooltip { 
+    position: absolute;     
+    text-align: center;     
+    width: 60px;          
+    height: 18px;         
+    padding: 2px;       
+    font: 12px sans-serif;    
+    background: lightsteelblue; 
+    border: 0px;    
+    border-radius: 8px;     
+    pointer-events: none;     
+}
+*/
